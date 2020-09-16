@@ -1,0 +1,5 @@
+{
+  "watch": "src/*.nim",
+  "exec": "cls && nimble run",
+  "ext": "nim"
+}

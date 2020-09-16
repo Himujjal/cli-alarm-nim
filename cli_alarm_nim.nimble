@@ -8,6 +8,12 @@ srcDir        = "src"
 bin           = @["cli_alarm_nim"]
 
 
+# Test
+task test, "Runs the test suite":
+  exec "nim c -r tests/test_main.nim"
+  exec "rm tests/*.exe"
+
+
 
 # Dependencies
 requires "nim >= 1.2.6"
