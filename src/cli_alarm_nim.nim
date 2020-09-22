@@ -10,14 +10,6 @@ var timer: CliTimer = nil
 proc runCommand*();
 
 
-#  handle segfaults */
-#proc sigHandler(a: cint) {.noconv.} = */
-#echo "Hello" */
-# if timer != nil: */
-#   timer.stopTimer() */
-
-# discard c_signal(SIGINT, sigHandler) */
-
 proc printHelp()=
   echo """WELCOME TO THE ULTIMATE TIMER APPLICATION!
 COMMANDS:
