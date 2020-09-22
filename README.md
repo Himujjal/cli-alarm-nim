@@ -44,3 +44,11 @@ Put your desired ringtone as `~/tones/play.mp3`.
 
 
 ## Develop:
+
+## ROADMAP:
+
+- [ ] Add direct CLI commands.
+- [ ] Seggregrate more clearly the APIs so that UI component can be separated from the business logic.
+- [ ] Put more font styles similar to Cordless Discord
+- [ ] Play audio controls to the UI.
+- [ ] Implement a RPC server for the business logic in a separate thread instead of using direct binary communication.
