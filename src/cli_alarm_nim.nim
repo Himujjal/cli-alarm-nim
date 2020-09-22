@@ -1,12 +1,22 @@
 import terminal
+import segfaults
 import rdstdin
 import strutils
 
-import cliTimer
-
-proc runCommand*()
+import CliTimer
 
 var timer: CliTimer = nil
+
+proc runCommand*();
+
+
+#  handle segfaults */
+#proc sigHandler(a: cint) {.noconv.} = */
+#echo "Hello" */
+# if timer != nil: */
+#   timer.stopTimer() */
+
+# discard c_signal(SIGINT, sigHandler) */
 
 proc printHelp()=
   echo """WELCOME TO THE ULTIMATE TIMER APPLICATION!
@@ -17,6 +27,7 @@ COMMANDS:
 'stop' -- to stop the timer instantly and enter the current date in db
 'update <id>,<startDate>,<endDate>' -- to update the entry
 'help' to show this menu
+'cls' | 'clear' -- clear screen
 'exit' -- to exit"""
 
 proc getResponse(): string = readLineFromStdin("|>|> ")
@@ -27,33 +38,35 @@ proc error()=
 
 proc readAndExecRestInput(res: string)=
   let resSeq = res.strip().split()
-  echo resSeq
 
   if resSeq.len <= 1:
     if resSeq.len == 0:
       error()
     elif resSeq[0] == "get":
-      echo timer.getRows()
+      echo $timer.getRows()
   elif resSeq.len == 2:
     case resSeq[0]:
     of "delete": discard timer.deleteRows(resSeq[1])
     of "update":
       let splitted = resSeq[1].split(",")
       discard timer.updateRow(splitted[0], splitted[1].parseInt(), splitted[2].parseInt())
-    of "start":  timer = startTimer(duration = resSeq[1].parseInt())
+    of "start":
+      let time = resSeq[1].strip().parseFloat()
+      timer.startTimer(duration = time)
     of "get":
       echo timer.getRows(resSeq[1])
-    else: error()
-  else:
-    error()
+      runCommand()
+    else:
+      error()
 
 proc runCommand()=
+  timer = initTimer()
   let res = getResponse()
   case res:
   of "exit": quit("Bye", 0)
   of "help": printHelp(); runCommand()
   of "cls", "clear": terminal.eraseScreen(); runCommand()
-  of "stop": timer.stopTimer()
+  of "stop": timer.stopTimer(); runCommand()
   else: readAndExecRestInput(res)
 
 when isMainModule:

@@ -14,6 +14,6 @@ task test, "Runs the test suite":
   exec "rm tests/*.exe"
 
 
-
 # Dependencies
 requires "nim >= 1.2.6"
+requires "asciitext"
